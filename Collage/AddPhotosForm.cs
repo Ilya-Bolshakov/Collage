@@ -45,6 +45,7 @@ namespace Collage
                 if (bitmaps.Count == 6)
                 {
                     buttonAdd.Enabled = false;
+                    buttonAddFromCamera.Enabled = false;
                 }
                 UpdateControls(bitmaps.Count - 1);
                 buttonDelete.Enabled = true;
@@ -128,8 +129,9 @@ namespace Collage
 
         private void buttonAddFromCamera_Click(object sender, EventArgs e)
         {
-            Capture capture = new Capture(); //create a camera captue
-            Bitmap img = capture.QueryFrame().Bitmap; //take a picture
+            Capture capture = new Capture(); 
+            Bitmap img = capture.QueryFrame().Bitmap;
+            
 
             bitmaps.Add(img);
             current = img;
@@ -137,9 +139,11 @@ namespace Collage
             if (bitmaps.Count == 6)
             {
                 buttonAdd.Enabled = false;
+                buttonAddFromCamera.Enabled = false;
             }
             UpdateControls(bitmaps.Count - 1);
             buttonDelete.Enabled = true;
+            capture.Dispose();
         }
     }
 }
