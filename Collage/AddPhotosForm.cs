@@ -131,7 +131,6 @@ namespace Collage
         {
             Capture capture = new Capture(); 
             Bitmap img = capture.QueryFrame().Bitmap;
-            
 
             bitmaps.Add(img);
             current = img;

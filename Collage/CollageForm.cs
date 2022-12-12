@@ -17,11 +17,13 @@ namespace Collage
     public partial class CollageForm : Form
     {
         List<Bitmap> bitmaps;
+        Image backgroundImg;
         public CollageForm()
         {
             InitializeComponent();
             bitmaps = new List<Bitmap>();
-            pictureBox.Image = new Bitmap(pictureBox.PreferredSize.Width, pictureBox.PreferredSize.Height);
+            backgroundImg = new Bitmap(pictureBox.PreferredSize.Width, pictureBox.PreferredSize.Height);
+            pictureBox.Image = backgroundImg;
         }
 
         private void btn_Background_Click(object sender, EventArgs e)
@@ -29,7 +31,7 @@ namespace Collage
             var dialogResult = openFileDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                var backgroundImg = new Bitmap(openFileDialog.FileName);
+                backgroundImg = new Bitmap(openFileDialog.FileName);
                 pictureBox.Image = backgroundImg;
             }
             DrawCollage();
@@ -44,6 +46,7 @@ namespace Collage
                 Graphics graphics = Graphics.FromImage(pictureBox.Image);                
                 graphics.FillRectangle(solidBrush, new Rectangle(0, 0, pictureBox.PreferredSize.Width, pictureBox.PreferredSize.Height));
                 pictureBox.Refresh();
+                backgroundImg = pictureBox.Image;
                 graphics.Dispose();
             }
             DrawCollage();
@@ -60,10 +63,10 @@ namespace Collage
 
         private void DrawCollage()
         {
-            int a = bitmaps.Count;
-            int countDownImg = a / 2;
-            int countUpImg = a - countDownImg;
-            double margin = pictureBox.PreferredSize.Width * 0.1;
+            pictureBox.Image = new Bitmap(backgroundImg);
+            int countDownImg = bitmaps.Count / 2;
+            int countUpImg = bitmaps.Count - countDownImg;
+            double margin = pictureBox.PreferredSize.Width * 0.05;
 
             int size = (int)((pictureBox.PreferredSize.Width - margin * (countUpImg + 1)) / countUpImg);
 
